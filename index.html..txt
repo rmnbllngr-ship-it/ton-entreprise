@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Projet d'Entreprise - Tableau de Bord</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #2ecc71;
+            --bg: #f4f7f6;
+            --text: #333;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+        h1 { color: var(--primary); text-align: center; }
+
+        /* Barre de progression */
+        .progress-container { background: #eee; border-radius: 20px; height: 20px; margin: 20px 0; overflow: hidden; }
+        .progress-bar { background: var(--secondary); height: 100%; width: 0%; transition: width 0.5s ease; }
+
+        /* Étapes */
+        .step { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
+        .step:hover { background: #f9f9f9; transform: translateX(5px); }
+        .step input[type="checkbox"] { margin-right: 15px; transform: scale(1.5); }
+        .step.completed { border-left: 5px solid var(--secondary); background: #f0fff4; }
+
+        .step-content { flex-grow: 1; }
+        .step-title { font-weight: bold; font-size: 1.1em; }
+        .step-desc { font-size: 0.9em; color: #666; }
+
+        .badge { background: var(--primary); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8em; float: right; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Mon Aventure Entrepreneuriale</h1>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p id="status-text">0% complété - C'est le moment de se lancer !</p>
+
+    <div id="steps-list">
+        <div class="step">
+            <input type="checkbox" onclick="updateProgress()">
+            <div class="step-content">
+                <div class="step-title">1. L'Idée & le Concept</div>
+                <div class="step-desc">Définir le problème que vous réglez et votre solution originale.</div>
+            </div>
+            <span class="badge">Étape 1</span>
+        </div>
+
+        <div class="step">
+            <input type="checkbox" onclick="updateProgress()">
+            <div class="step-content">
+                <div class="step-title">2. Étude de Marché</div>
+                <div class="step-desc">Interrogez vos futurs clients et analysez vos concurrents.</div>
+            </div>
+            <span class="badge">Étape 2</span>
+        </div>
+
+        <div class="step">
+            <input type="checkbox" onclick="updateProgress()">
+            <div class="step-content">
+                <div class="step-title">3. Business Model</div>
+                <div class="step-desc">Comment allez-vous gagner de l'argent ? (Prix, coûts, ventes).</div>
+            </div>
+            <span class="badge">Étape 3</span>
+        </div>
+
+        <div class="step">
+            <input type="checkbox" onclick="updateProgress()">
+            <div class="step-content">
+                <div class="step-title">4. Le Pitch Final</div>
+                <div class="step-desc">Préparez une présentation percutante de 3 minutes.</div>
+            </div>
+            <span class="badge">Étape 4</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+        let checkedCount = 0;
+
+        checkboxes.forEach((cb) => {
+            if (cb.checked) {
+                checkedCount++;
+                cb.parentElement.classList.add('completed');
+            } else {
+                cb.parentElement.classList.remove('completed');
+            }
+        });
+
+        const percentage = Math.round((checkedCount / total) * 100);
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('status-text');
+
+        progressBar.style.width = percentage + '%';
+        
+        if(percentage === 100) {
+            statusText.innerText = "Félicitations ! Vous êtes prêts à entreprendre ! 🎉";
+        } else {
+            statusText.innerText = percentage + "% complété - Continuez comme ça !";
+        }
+    }
+</script>
+
+</body>
+</html>
